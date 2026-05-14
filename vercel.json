@@ -1,0 +1,5 @@
+{
+  "redirects": [
+    { "source": "/", "destination": "/javier/", "permanent": false }
+  ]
+}
