@@ -1,5 +1,8 @@
 {
   "redirects": [
     { "source": "/", "destination": "/javier/", "permanent": false }
+  ],
+  "rewrites": [
+    { "source": "/pedido", "destination": "/pedido/index.html" }
   ]
 }
