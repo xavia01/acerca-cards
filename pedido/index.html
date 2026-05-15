@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tu tarjeta NFC profesional · Pedido</title>
+<meta name="description" content="Tarjeta de presentación digital con tecnología NFC. Funciona con iPhone y Android.">
+<meta property="og:title" content="Tu tarjeta NFC profesional">
+<meta property="og:description" content="Una tarjeta que guarda tu contacto al instante en cualquier teléfono.">
+<meta property="og:type" content="website">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=Lora:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F5F0E8;--bg2:#EDE7D9;--ink:#1A1612;--ink2:#5C5248;--ink3:#9C8E82;--accent:#C8401A;--accent2:#E8A020;--green:#1A6B3C;--border:rgba(26,22,18,.12);--shadow:0 2px 16px rgba(26,22,18,.06)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:'Lora',Georgia,serif;font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased;min-height:100vh}
+.container{max-width:680px;margin:0 auto;padding:32px 22px 80px}
+
+/* HERO */
+.hero{text-align:center;margin-bottom:32px;padding:24px 0}
+.eyebrow{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
+.title{font-family:'Syne',sans-serif;font-size:clamp(32px,7vw,44px);font-weight:800;letter-spacing:-.02em;line-height:1.05;margin-bottom:14px}
+.title span{color:var(--accent);font-style:italic;font-weight:400;font-family:'Lora',serif}
+.subtitle{font-style:italic;color:var(--ink2);font-size:16px;max-width:480px;margin:0 auto;line-height:1.55}
+
+/* INTRO INFO */
+.intro-card{background:white;border:1px solid var(--border);border-radius:14px;padding:24px;margin-bottom:24px;box-shadow:var(--shadow)}
+.intro-row{display:flex;gap:14px;align-items:flex-start;padding:10px 0}
+.intro-num{flex-shrink:0;width:28px;height:28px;background:var(--ink);color:var(--bg);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:700;font-size:13px}
+.intro-text{font-size:14px;color:var(--ink2);line-height:1.5}
+.intro-text strong{color:var(--ink);font-family:'Syne',sans-serif;font-weight:600}
+
+/* FORM CARDS */
+.card{background:white;border:1px solid var(--border);border-radius:14px;padding:22px;box-shadow:var(--shadow);margin-bottom:18px}
+.card-label{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink3);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.card-label-num{background:var(--accent);color:white;width:22px;height:22px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;font-family:'Syne',sans-serif}
+
+label{display:block;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink2);margin-bottom:6px;margin-top:14px;font-weight:500}
+label:first-of-type{margin-top:0}
+label .opt{color:var(--ink3);font-weight:400;text-transform:none;letter-spacing:0;font-family:'Lora',serif;font-style:italic;margin-left:6px}
+label .req{color:var(--accent)}
+
+input[type=text],input[type=email],input[type=tel],input[type=url],select,textarea{width:100%;padding:11px 14px;border:1px solid var(--border);border-radius:8px;background:white;font-family:'Lora',serif;font-size:15px;color:var(--ink);transition:all .15s}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(200,64,26,.1)}
+
+.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:540px){.row{grid-template-columns:1fr}}
+
+.help{font-size:12px;color:var(--ink3);margin-top:6px;font-style:italic}
+
+/* PHOTO */
+.photo-zone{border:2px dashed var(--border);border-radius:12px;padding:24px;text-align:center;cursor:pointer;transition:all .2s;background:var(--bg2)}
+.photo-zone:hover{border-color:var(--accent);background:white}
+.photo-zone.has-photo{padding:14px;background:white}
+.photo-zone input{display:none}
+.photo-preview{width:120px;height:120px;border-radius:50%;margin:0 auto 12px;object-fit:cover;object-position:center top;border:1px solid var(--border)}
+.photo-hint{font-size:13px;color:var(--ink3);font-style:italic}
+.photo-zone p:first-child{font-family:'Syne',sans-serif;font-weight:600;font-size:15px;margin-bottom:4px;color:var(--ink)}
+
+/* HONEYPOT - invisible */
+.hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0;pointer-events:none}
+
+/* CHECKBOX */
+.consent{display:flex;align-items:flex-start;gap:10px;padding:14px;background:var(--bg2);border-radius:10px;margin:18px 0;font-size:14px;cursor:pointer}
+.consent input{margin-top:3px;flex-shrink:0;width:18px;height:18px;accent-color:var(--accent)}
+.consent span{color:var(--ink2);line-height:1.5}
+
+/* SUBMIT BUTTON */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--accent);color:white;border:none;border-radius:12px;padding:18px 24px;font-family:'Syne',sans-serif;font-size:16px;font-weight:700;letter-spacing:.01em;cursor:pointer;transition:all .15s;width:100%;box-shadow:0 4px 14px rgba(200,64,26,.25)}
+.btn:hover:not(:disabled){background:#A82F0E;transform:translateY(-1px);box-shadow:0 6px 18px rgba(200,64,26,.35)}
+.btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.btn-light{background:white;color:var(--ink);border:1px solid var(--border);box-shadow:none}
+.btn-light:hover:not(:disabled){background:var(--bg2);color:var(--ink);box-shadow:none}
+.btn-green{background:var(--green);box-shadow:0 4px 14px rgba(26,107,60,.25)}
+.btn-green:hover:not(:disabled){background:#155F33;box-shadow:0 6px 18px rgba(26,107,60,.35)}
+
+.loading{display:flex;align-items:center;justify-content:center;gap:10px}
+.spinner{width:18px;height:18px;border:2px solid rgba(255,255,255,.3);border-top-color:white;border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* SUCCESS PAGE */
+.success-page{display:none;animation:rise .5s ease-out}
+.success-page.show{display:block}
+.form-page{display:block}
+.form-page.hide{display:none}
+
+@keyframes rise{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+.success-hero{background:linear-gradient(135deg,var(--green) 0%,#0F4E2C 100%);color:white;border-radius:16px;padding:36px 28px;text-align:center;margin-bottom:20px;box-shadow:0 8px 32px rgba(26,107,60,.25)}
+.success-checkmark{width:64px;height:64px;background:white;border-radius:50%;margin:0 auto 18px;display:flex;align-items:center;justify-content:center;color:var(--green);font-size:32px;font-weight:700;animation:pop .5s cubic-bezier(.34,1.56,.64,1) .2s both}
+@keyframes pop{from{transform:scale(0)}to{transform:scale(1)}}
+.success-eyebrow{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;opacity:.7;margin-bottom:8px}
+.success-title{font-family:'Syne',sans-serif;font-size:28px;font-weight:800;line-height:1.1;margin-bottom:8px}
+.success-subtitle{font-style:italic;opacity:.85;font-size:15px;max-width:380px;margin:0 auto}
+
+.success-url-card{background:white;border:1px solid var(--border);border-radius:14px;padding:18px;margin-bottom:18px;box-shadow:var(--shadow)}
+.success-url-label{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink3);margin-bottom:10px}
+.success-url-value{font-family:'DM Mono',monospace;font-size:14px;color:var(--accent);word-break:break-all;margin-bottom:14px;line-height:1.4}
+.success-url-actions{display:flex;gap:10px;flex-wrap:wrap}
+.success-url-actions a,.success-url-actions button{flex:1;min-width:140px}
+
+.payment-card{background:var(--bg2);border:1px solid var(--border);border-left:4px solid var(--accent2);border-radius:0 14px 14px 0;padding:24px;margin-bottom:18px}
+.payment-label{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+.payment-amount{font-family:'Syne',sans-serif;font-size:36px;font-weight:800;color:var(--ink);margin-bottom:14px;line-height:1}
+.payment-instructions{font-size:14px;color:var(--ink2);line-height:1.6}
+.payment-instructions strong{color:var(--ink);font-family:'Syne',sans-serif;font-weight:600}
+.payment-details{background:white;border:1px solid var(--border);border-radius:10px;padding:14px;margin-top:14px;font-family:'DM Mono',monospace;font-size:13px;line-height:1.8;color:var(--ink2)}
+.payment-details strong{color:var(--ink);font-weight:600}
+
+.notify-card{background:var(--ink);color:white;border-radius:14px;padding:24px;margin-bottom:18px;text-align:center}
+.notify-card .notify-title{font-family:'Syne',sans-serif;font-size:18px;font-weight:700;margin-bottom:8px}
+.notify-card .notify-sub{font-size:14px;opacity:.75;font-style:italic;margin-bottom:16px;line-height:1.5}
+
+.error{background:#FEE2E2;color:#991B1B;border:1px solid #FCA5A5;padding:14px 18px;border-radius:10px;margin-top:14px;font-size:14px}
+
+/* ASTERISCO REQUERIDO */
+.req::after{content:' *';color:var(--accent)}
+
+/* FOOTER */
+.footer{text-align:center;margin-top:40px;padding-top:24px;border-top:1px solid var(--border);font-size:13px;color:var(--ink3);font-style:italic}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- ═══ PÁGINA DEL FORMULARIO ═══ -->
+  <div class="form-page" id="formPage">
+
+    <header class="hero">
+      <div class="eyebrow">Pedido · Tarjeta NFC</div>
+      <h1 class="title">Tu tarjeta de presentación,<br><span>inteligente.</span></h1>
+      <p class="subtitle">Una tarjeta que con un toque guarda tu contacto en cualquier teléfono — iPhone o Android. Sin apps, sin escribir nada.</p>
+    </header>
+
+    <div class="intro-card">
+      <div class="intro-row">
+        <div class="intro-num">1</div>
+        <div class="intro-text">Llena este formulario con tus datos profesionales y sube tu foto. <strong>Toma 3 minutos.</strong></div>
+      </div>
+      <div class="intro-row">
+        <div class="intro-num">2</div>
+        <div class="intro-text">Al enviar, recibes el <strong>link de tu tarjeta digital</strong> al instante. Cualquiera que tenga el link puede ver tu perfil.</div>
+      </div>
+      <div class="intro-row">
+        <div class="intro-num">3</div>
+        <div class="intro-text">Pagas <strong>RD$2,500</strong> por transferencia y coordinamos la entrega de tu tarjeta NFC física en <strong>24 horas</strong>.</div>
+      </div>
+    </div>
+
+    <form id="cardForm" onsubmit="submit(event)">
+
+      <!-- Honeypot anti-bot -->
+      <div class="hp"><input type="text" name="website_url" id="hp_website" tabindex="-1" autocomplete="off"></div>
+
+      <div class="card">
+        <div class="card-label"><span class="card-label-num">1</span>Identidad profesional</div>
+
+        <div class="row">
+          <div>
+            <label>Honorífico <span class="opt">opcional</span></label>
+            <select id="honorific">
+              <option value="">— Ninguno —</option>
+              <option>Dr.</option>
+              <option>Dra.</option>
+              <option>Lic.</option>
+              <option>Licda.</option>
+              <option>Ing.</option>
+              <option>Inga.</option>
+              <option>MSc.</option>
+              <option>PhD.</option>
+              <option>Arq.</option>
+              <option>Mtro.</option>
+              <option>Mtra.</option>
+            </select>
+          </div>
+          <div>
+            <label>Idioma</label>
+            <select id="language">
+              <option value="es">Español</option>
+              <option value="en">English</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row">
+          <div>
+            <label class="req">Nombre</label>
+            <input type="text" id="firstName" required placeholder="Juan" autocomplete="given-name" />
+          </div>
+          <div>
+            <label class="req">Apellido(s)</label>
+            <input type="text" id="lastName" required placeholder="Pérez" autocomplete="family-name" />
+          </div>
+        </div>
+
+        <label class="req">Cargo / Especialidad</label>
+        <input type="text" id="title" required placeholder="Cardiólogo · Especialista en arritmias" />
+        <p class="help">Aparecerá debajo de tu nombre. Puedes usar · para separar.</p>
+
+        <div class="row">
+          <div>
+            <label>Empresa / Institución <span class="opt">opcional</span></label>
+            <input type="text" id="company" placeholder="Centro Médico de Santiago" />
+          </div>
+          <div>
+            <label>Categoría visible <span class="opt">opcional</span></label>
+            <input type="text" id="eyebrow" placeholder="Cardiología" />
+            <p class="help">Texto pequeño arriba de tu nombre.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-label"><span class="card-label-num">2</span>Datos de contacto</div>
+
+        <div class="row">
+          <div>
+            <label class="req">Teléfono</label>
+            <input type="tel" id="phone" required placeholder="+18099957662" />
+            <p class="help">Con código de país (+1 para RD), sin espacios.</p>
+          </div>
+          <div>
+            <label>WhatsApp <span class="opt">si es distinto</span></label>
+            <input type="tel" id="whatsapp" placeholder="+18099957662" />
+          </div>
+        </div>
+
+        <label>Email <span class="opt">opcional</span></label>
+        <input type="email" id="email" placeholder="tu@correo.com" />
+
+        <div class="row">
+          <div>
+            <label>Sitio web <span class="opt">opcional</span></label>
+            <input type="url" id="website" placeholder="https://..." />
+          </div>
+          <div>
+            <label>LinkedIn <span class="opt">URL completa</span></label>
+            <input type="url" id="linkedin" placeholder="https://linkedin.com/in/..." />
+          </div>
+        </div>
+
+        <div class="row">
+          <div>
+            <label>Instagram <span class="opt">URL completa</span></label>
+            <input type="url" id="instagram" placeholder="https://instagram.com/..." />
+          </div>
+          <div>
+            <label>Dirección <span class="opt">opcional</span></label>
+            <input type="text" id="address" placeholder="Av. 27 de Febrero, Santiago" />
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-label"><span class="card-label-num">3</span>Foto profesional</div>
+
+        <div class="photo-zone" id="photoZone" onclick="document.getElementById('photoInput').click()">
+          <input type="file" id="photoInput" accept="image/*" onchange="handlePhoto(event)" />
+          <img id="photoPreview" class="photo-preview" style="display:none" alt="" />
+          <div id="photoLabel">
+            <p>📸 Toca aquí para subir tu foto</p>
+            <p class="photo-hint">Idealmente una foto profesional reciente. Si no, usaremos tus iniciales.</p>
+          </div>
+        </div>
+      </div>
+
+      <label class="consent">
+        <input type="checkbox" id="consent" required>
+        <span>Entiendo que al recibir el link de mi tarjeta, debo realizar el pago de RD$2,500 por transferencia bancaria para coordinar la entrega de la tarjeta NFC física.</span>
+      </label>
+
+      <button type="submit" class="btn" id="submitBtn">
+        <span id="submitText">⚡ Generar mi tarjeta</span>
+      </button>
+
+      <div id="errorBox"></div>
+    </form>
+
+    <div class="footer">
+      Acerca · Tarjetas NFC profesionales
+    </div>
+
+  </div>
+
+  <!-- ═══ PÁGINA DE ÉXITO ═══ -->
+  <div class="success-page" id="successPage">
+
+    <div class="success-hero">
+      <div class="success-checkmark">✓</div>
+      <div class="success-eyebrow">Tarjeta creada</div>
+      <h2 class="success-title" id="successName">Tu tarjeta está lista</h2>
+      <p class="success-subtitle">Ya puedes verla y compartirla. La tarjeta física llega en 24 horas.</p>
+    </div>
+
+    <div class="success-url-card">
+      <div class="success-url-label">🔗 Tu perfil digital</div>
+      <div class="success-url-value" id="successUrl">https://acerca-cards.vercel.app/...</div>
+      <div class="success-url-actions">
+        <a class="btn btn-light" id="viewBtn" target="_blank">Ver mi tarjeta ↗</a>
+        <button class="btn btn-light" onclick="copyUrl()">Copiar link</button>
+      </div>
+    </div>
+
+    <div class="payment-card">
+      <div class="payment-label">💰 Para activar tu tarjeta física</div>
+      <div class="payment-amount">RD$ 2,500</div>
+      <div class="payment-instructions">
+        <p><strong>Realiza la transferencia a:</strong></p>
+        <div class="payment-details">
+          🏦 <strong>Banco:</strong> [Tu banco]<br>
+          💳 <strong>Cuenta:</strong> [Número de cuenta]<br>
+          👤 <strong>A nombre de:</strong> Javier Matías Henríquez<br>
+          📱 <strong>Cédula:</strong> [Tu cédula]
+        </div>
+        <p style="margin-top:14px">Cuando hagas el pago, envía el comprobante por WhatsApp y coordinamos la entrega de la tarjeta NFC física en 24 horas.</p>
+      </div>
+    </div>
+
+    <div class="notify-card">
+      <div class="notify-title">📲 Avísale a Javier</div>
+      <div class="notify-sub">Toca el botón para enviarle por WhatsApp tus datos automáticamente. Él recibirá tu pedido y coordinará el pago contigo.</div>
+      <button class="btn btn-green" onclick="notifyWhatsApp()">
+        💬 Notificar por WhatsApp
+      </button>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+// ─── Config ─────────────────────────────────────────────
+const JAVIER_WHATSAPP = '18299834444'; // tu número sin +
+
+// ─── Foto ───────────────────────────────────────────────
+let photoDataUri = '';
+
+function handlePhoto(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  // Validar tamaño antes de procesar (max 10MB)
+  if (file.size > 10 * 1024 * 1024) {
+    alert('La foto es muy grande. Máximo 10MB.');
+    return;
+  }
+
+  const reader = new FileReader();
+  reader.onload = function(ev) {
+    const img = new Image();
+    img.onload = function() {
+      const canvas = document.createElement('canvas');
+      canvas.width = 400;
+      canvas.height = 400;
+      const ctx = canvas.getContext('2d');
+      const scale = Math.max(400/img.width, 400/img.height);
+      const sw = img.width * scale;
+      const sh = img.height * scale;
+      const dx = (400 - sw)/2;
+      const dy = Math.min(0, (400 - sh)/2);
+      ctx.fillStyle = '#1A1816';
+      ctx.fillRect(0, 0, 400, 400);
+      ctx.drawImage(img, dx, dy, sw, sh);
+      photoDataUri = canvas.toDataURL('image/jpeg', 0.82);
+
+      document.getElementById('photoPreview').src = photoDataUri;
+      document.getElementById('photoPreview').style.display = 'block';
+      document.getElementById('photoLabel').innerHTML = '<p class="photo-hint">✓ Foto lista. Toca para cambiar.</p>';
+      document.getElementById('photoZone').classList.add('has-photo');
+    };
+    img.src = ev.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+// ─── Estado para WhatsApp ───────────────────────────────
+let lastSubmission = null;
+
+// ─── Submit ─────────────────────────────────────────────
+async function submit(e) {
+  e.preventDefault();
+  document.getElementById('errorBox').innerHTML = '';
+
+  const data = {
+    language: document.getElementById('language').value,
+    honorific: document.getElementById('honorific').value,
+    firstName: document.getElementById('firstName').value.trim(),
+    lastName: document.getElementById('lastName').value.trim(),
+    title: document.getElementById('title').value.trim(),
+    company: document.getElementById('company').value.trim(),
+    eyebrow: document.getElementById('eyebrow').value.trim(),
+    phone: document.getElementById('phone').value.trim(),
+    whatsapp: document.getElementById('whatsapp').value.trim() || document.getElementById('phone').value.trim(),
+    email: document.getElementById('email').value.trim(),
+    website: document.getElementById('website').value.trim(),
+    linkedin: document.getElementById('linkedin').value.trim(),
+    instagram: document.getElementById('instagram').value.trim(),
+    address: document.getElementById('address').value.trim(),
+    photo: photoDataUri,
+    website_url: document.getElementById('hp_website').value // honeypot
+  };
+
+  setLoading(true);
+
+  try {
+    const resp = await fetch('/api/create-card', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+
+    const result = await resp.json();
+
+    if (!resp.ok) {
+      throw new Error(result.error || 'Error al crear la tarjeta');
+    }
+
+    lastSubmission = { ...data, url: result.url, fullName: result.fullName };
+    showSuccess(result);
+
+  } catch (err) {
+    showError(err.message);
+    setLoading(false);
+  }
+}
+
+function setLoading(loading) {
+  const btn = document.getElementById('submitBtn');
+  const txt = document.getElementById('submitText');
+  btn.disabled = loading;
+  txt.innerHTML = loading
+    ? '<div class="loading"><div class="spinner"></div>Generando tu tarjeta…</div>'
+    : '⚡ Generar mi tarjeta';
+}
+
+function showError(msg) {
+  document.getElementById('errorBox').innerHTML = '<div class="error">' + msg + '</div>';
+  window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+}
+
+function showSuccess(result) {
+  document.getElementById('formPage').classList.add('hide');
+  document.getElementById('successPage').classList.add('show');
+  document.getElementById('successName').textContent = '¡Hola ' + result.fullName.split(' ')[0] + '!';
+  document.getElementById('successUrl').textContent = result.url;
+  document.getElementById('viewBtn').href = result.url;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function copyUrl() {
+  if (!lastSubmission) return;
+  navigator.clipboard.writeText(lastSubmission.url).then(() => {
+    event.target.textContent = '¡Copiado!';
+    setTimeout(() => event.target.textContent = 'Copiar link', 1500);
+  });
+}
+
+function notifyWhatsApp() {
+  if (!lastSubmission) return;
+  const d = lastSubmission;
+  const msg = [
+    `🎯 *Nuevo pedido de tarjeta NFC*`,
+    ``,
+    `👤 *${d.fullName}*`,
+    d.title ? `💼 ${d.title}` : '',
+    d.company ? `🏢 ${d.company}` : '',
+    ``,
+    `📱 Tel: ${d.phone}`,
+    d.email ? `✉️ ${d.email}` : '',
+    d.linkedin ? `🔗 LinkedIn: ${d.linkedin}` : '',
+    ``,
+    `✅ *Tarjeta generada:*`,
+    `${d.url}`,
+    ``,
+    `💰 Coordinando pago de RD$2,500 por transferencia.`,
+    `📦 ¿Cómo coordinamos la entrega de la tarjeta física?`
+  ].filter(Boolean).join('\n');
+
+  const url = `https://wa.me/${JAVIER_WHATSAPP}?text=${encodeURIComponent(msg)}`;
+  window.open(url, '_blank');
+}
+</script>
+</body>
+</html>
