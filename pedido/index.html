@@ -107,6 +107,10 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--accent);
 .payment-details strong{color:var(--ink);font-weight:600}
 
 .notify-card{background:var(--ink);color:white;border-radius:14px;padding:24px;margin-bottom:18px;text-align:center}
+    .notify-card.pulse{animation:pulseBorder 1.5s ease-in-out infinite}
+    @keyframes pulseBorder{0%,100%{box-shadow:0 0 0 0 rgba(26,107,60,.6)}50%{box-shadow:0 0 0 12px rgba(26,107,60,0)}}
+    .notify-card .big-btn{font-size:18px;padding:22px 24px}
+    .notify-card .step-hint{display:inline-block;background:rgba(255,255,255,.15);padding:4px 12px;border-radius:100px;font-size:10px;letter-spacing:.18em;text-transform:uppercase;margin-bottom:14px;font-family:monospace}
 .notify-card .notify-title{font-family:'Syne',sans-serif;font-size:18px;font-weight:700;margin-bottom:8px}
 .notify-card .notify-sub{font-size:14px;opacity:.75;font-style:italic;margin-bottom:16px;line-height:1.5}
 
@@ -316,12 +320,14 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--accent);
       </div>
     </div>
 
-    <div class="notify-card">
-      <div class="notify-title">📲 Avísale a Javier</div>
-      <div class="notify-sub">Toca el botón para enviarle por WhatsApp tus datos automáticamente. Él recibirá tu pedido y coordinará el pago contigo.</div>
-      <button class="btn btn-green" onclick="notifyWhatsApp()">
-        💬 Notificar por WhatsApp
+    <div class="notify-card pulse" id="notifyCard">
+      <div class="step-hint">Ultimo paso requerido</div>
+      <div class="notify-title">Coordina tu entrega</div>
+      <div class="notify-sub">Estoy abriendo WhatsApp con tus datos. Si no se abre automaticamente, toca el boton verde.</div>
+      <button class="btn btn-green big-btn" onclick="notifyWhatsApp()">
+        Abrir WhatsApp ahora
       </button>
+      <p style="margin-top:14px;font-size:12px;opacity:.6;font-style:italic">Sin este paso, no podemos coordinar la entrega de tu tarjeta fisica.</p>
     </div>
 
   </div>
@@ -445,6 +451,7 @@ function showSuccess(result) {
   document.getElementById('successUrl').textContent = result.url;
   document.getElementById('viewBtn').href = result.url;
   window.scrollTo({ top: 0, behavior: 'smooth' });
+  setTimeout(() => { notifyWhatsApp(); }, 1800);
 }
 
 function copyUrl() {
