@@ -451,7 +451,7 @@ function showSuccess(result) {
   document.getElementById('successUrl').textContent = result.url;
   document.getElementById('viewBtn').href = result.url;
   window.scrollTo({ top: 0, behavior: 'smooth' });
-  setTimeout(() => { notifyWhatsApp(); }, 1800);
+  setTimeout(() => { autoOpenWhatsApp(); }, 1800);
 }
 
 function copyUrl() {
@@ -460,6 +460,28 @@ function copyUrl() {
     event.target.textContent = '¡Copiado!';
     setTimeout(() => event.target.textContent = 'Copiar link', 1500);
   });
+}
+
+function autoOpenWhatsApp() {
+  if (!lastSubmission) return;
+  const d = lastSubmission;
+  const msg = [
+    `🎯 Nuevo pedido de tarjeta NFC`,
+    ``,
+    `👤 ${d.fullName}`,
+    d.title ? `💼 ${d.title}` : '',
+    d.company ? `🏢 ${d.company}` : '',
+    ``,
+    `📱 Tel: ${d.phone}`,
+    d.email ? `✉️ ${d.email}` : '',
+    ``,
+    `✅ Tarjeta generada:`,
+    `${d.url}`,
+    ``,
+    `💰 Voy a hacer la transferencia de RD$2,500 a Banreservas.`,
+    `📦 ¿A qué dirección coordinamos la entrega de la tarjeta física?`
+  ].filter(Boolean).join('\n');
+  window.location.href = `https://wa.me/${JAVIER_WHATSAPP}?text=${encodeURIComponent(msg)}`;
 }
 
 function notifyWhatsApp() {
