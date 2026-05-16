@@ -451,7 +451,6 @@ function showSuccess(result) {
   document.getElementById('successUrl').textContent = result.url;
   document.getElementById('viewBtn').href = result.url;
   window.scrollTo({ top: 0, behavior: 'smooth' });
-  setTimeout(() => { autoOpenWhatsApp(); }, 1800);
 }
 
 function copyUrl() {
