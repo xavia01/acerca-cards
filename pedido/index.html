@@ -151,7 +151,7 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--accent);
       </div>
     </div>
 
-    <form id="cardForm" onsubmit="submit(event)">
+    <form id="cardForm" onsubmit="submitForm(event)">
 
       <!-- Honeypot anti-bot -->
       <div class="hp"><input type="text" name="website_url" id="hp_website" tabindex="-1" autocomplete="off"></div>
@@ -383,7 +383,7 @@ function handlePhoto(e) {
 let lastSubmission = null;
 
 // ─── Submit ─────────────────────────────────────────────
-async function submit(e) {
+async function submitForm(e) {
   e.preventDefault();
   document.getElementById('errorBox').innerHTML = '';
 
