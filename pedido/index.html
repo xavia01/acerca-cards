@@ -297,12 +297,13 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--accent);
     </div>
 
     <div class="success-url-card">
-      <div class="success-url-label">🔗 Tu perfil digital</div>
-      <div class="success-url-value" id="successUrl">https://acerca-cards.vercel.app/...</div>
-      <div class="success-url-actions">
-        <a class="btn btn-light" id="viewBtn" target="_blank">Ver mi tarjeta ↗</a>
-        <button class="btn btn-light" onclick="copyUrl()">Copiar link</button>
-      </div>
+      <div class="success-url-label">📋 Estado del pedido</div>
+      <p style="font-size:15px;color:var(--ink);line-height:1.6;margin-bottom:10px">
+        Tu tarjeta está <strong>siendo preparada</strong>. Recibirás el enlace de tu perfil digital y tu tarjeta NFC física <strong>cuando confirmemos tu pago</strong>.
+      </p>
+      <p style="font-size:13px;color:var(--ink3);font-style:italic">
+        Coordina el pago por WhatsApp para activar tu tarjeta.
+      </p>
     </div>
 
     <div class="payment-card">
@@ -448,8 +449,6 @@ function showSuccess(result) {
   document.getElementById('formPage').classList.add('hide');
   document.getElementById('successPage').classList.add('show');
   document.getElementById('successName').textContent = '¡Hola ' + result.fullName.split(' ')[0] + '!';
-  document.getElementById('successUrl').textContent = result.url;
-  document.getElementById('viewBtn').href = result.url;
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
